@@ -2,7 +2,6 @@ def get_County():
     County = input("What's your county name? ")
     return County
 
-
 def get_MarketValue():
     MarketValue = float(input("What is the market value? $"))
     return MarketValue

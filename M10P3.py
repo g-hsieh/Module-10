@@ -15,13 +15,17 @@ def calculateNewMSRP(msrp, percentOff):
     newMSRP = msrp - discountAmount
     return newMSRP
 
+def calculateOTDPrice(newMSRP):
+    salesTax = newMSRP * 0.07
+    OTDPrice = newMSRP + salesTax
+    return OTDPrice
+
 def calculateTotalSalesPrice(newMSRP, salesTax):
     totalSalesPrice = newMSRP + salesTax
     return totalSalesPrice
 
-def displayResult(carMake, carModel, evCode, msrp,
-                  percentOff, discountAmount,
-                  newMSRP, salesTax, totalPrice):
+def displayResult(carMake, carModel, evCode, msrp, percentOff,
+                  discountAmount, newMSRP, OTDPrice, totalPrice):
 
     print("\nVehicle Information")
     print(f"Car Make: {carMake}")
@@ -31,16 +35,14 @@ def displayResult(carMake, carModel, evCode, msrp,
     print(f"Discount Percent:    {percentOff:.0%}")
     print(f"Discount Amount:    ${discountAmount:,.2f}")
     print(f"Discounted MSRP:    ${newMSRP:,.2f}")
-    print(f"Sales Tax (7%):     ${salesTax:,.2f}")
+    print(f"OTD Price:          ${OTDPrice:,.2f}")
     print(f"Total Sales Price:  ${totalPrice:,.2f}")
 
 # Initialize accumulators
 totalMSRP = 0
 totalSalesPrice = 0
 
-runProgram = input(
-    "Would you like to enter a vehicle? (Y/N): "
-)
+runProgram = input("Would you like to enter a vehicle? (Y/N): ")
 
 while runProgram.lower() in ("y", "yes"):
 
@@ -49,12 +51,12 @@ while runProgram.lower() in ("y", "yes"):
     evCode = get_evCode()
     msrp = get_MSRP()
 
-    if carMake.lower() == "honda":
+    if evCode.lower() == "ev":
+        percentOffMSRP = 0.30
+    elif carMake.lower() == "honda":
         percentOffMSRP = 0.10
     elif carMake.lower() == "toyota":
         percentOffMSRP = 0.15
-    elif evCode.upper() == "EV":
-        percentOffMSRP = 0.30
     else:
         percentOffMSRP = 0.05
 
@@ -64,10 +66,9 @@ while runProgram.lower() in ("y", "yes"):
 
     salesTax = newMSRP * 0.07
 
-    totalPrice = calculateTotalSalesPrice(
-        newMSRP,
-        salesTax
-    )
+    OTDPrice = calculateOTDPrice(newMSRP)
+
+    totalPrice = calculateTotalSalesPrice(newMSRP, salesTax)
 
     totalMSRP += msrp
     totalSalesPrice += totalPrice
@@ -80,14 +81,12 @@ while runProgram.lower() in ("y", "yes"):
         percentOffMSRP,
         discountAmount,
         newMSRP,
-        salesTax,
+        OTDPrice,
         totalPrice
     )
 
-    runProgram = input(
-        "\nWould you like to add another vehicle? (Y/N): "
-    )
+    runProgram = input("\nWould you like to add another vehicle? (Y/N): ")
 
 print("\nProgram Ended")
-print(f"Total MSRP of all vehicles:      ${totalMSRP:,.2f}")
-print(f"Total Sales Price of vehicles:   ${totalSalesPrice:,.2f}")
+print(f"Total MSRP of all vehicles:     ${totalMSRP:,.2f}")
+print(f"Total Sales Price of vehicles:  ${totalSalesPrice:,.2f}")

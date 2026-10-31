@@ -1,36 +1,35 @@
 def get_Length():
-    length = float(input("What is the length? "))
+    length = float(input("What is the length in feet? "))
     return length
 
 def get_Width():
-    width = float(input("What is the width? "))
+    width = float(input("What is the width in feet? "))
     return width
 
 def get_Height():
-    height = float(input("What is the height? "))
+    height = float(input("What is the height in feet? "))
     return height
 
 def calculateWallSquareFootage(length, width, height):
     wallSquareFootage = (2 * length * height) + (2 * width * height)
     return wallSquareFootage
 
-def calculateGallons(wallSquareFootage):
-    gallons = wallSquareFootage / 50
-    return gallons
+def calculatewGallons(wallSquareFootage):
+    wGallons = wallSquareFootage / 50
+    return wGallons
 
-def calculateArea(length, width):
-    area = length * width
-    return area
+def calculatefcGallons(length, width):
+    fcGallons = (length * width) / 50
+    return fcGallons
 
-def displayResult(wallSquareFootage, gallons, area):
-    print(
-        f"The area of the ceiling or floor is {area:.2f} square units "
-        f"with {gallons:.2f} gallons of ceiling paint or floor varnish."
-    )
-    print(f"The wall square footage is {wallSquareFootage:.2f} square feet.")
+def displayResult(wGallons, fcGallons):
+    print()
+    print(f"You will need {wGallons:.2f} gallons of wall paint.")
+    print()
+    print(f"You will need {fcGallons:.2f} gallons of ceiling paint or floor varnish.")
 
 runProgram = input(
-    "Would you like to know the wall square footage, the area, & number of gallons needed? (Y/N) "
+    "Would you like to know how many gallons of paint are needed to paint your room? (Y/N) "
 )
 
 while runProgram.lower() in ("y", "yes"):
@@ -40,14 +39,11 @@ while runProgram.lower() in ("y", "yes"):
     height = get_Height()
 
     wallSquareFootage = calculateWallSquareFootage(length, width, height)
-    area = calculateArea(length, width)
-    gallons = calculateGallons(wallSquareFootage)
+    fcGallons = calculatefcGallons(length, width)
+    wGallons = calculatewGallons(wallSquareFootage)
 
-    displayResult(wallSquareFootage, gallons, area)
+    displayResult(wGallons, fcGallons)
 
-    runProgram = input(
-        "\nWould you like to enter another wall square footage, number of gallons, and area? (Y/N): "
-    )
+    runProgram = input("\nWould you like to enter another wall square footage, number of gallons, and area? (Y/N): ")
 
 print("\nProgram ended.")
-print(f"\nYou used {gallons:,.2f} gallons of ceiling paint for the ceiling and {gallons:,.2f} gallons of floor varnish for the floor.")
